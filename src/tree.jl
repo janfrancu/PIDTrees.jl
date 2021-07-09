@@ -1,5 +1,6 @@
 import StatsBase: predict, fit!
 using StatsBase: sample, Weights, quantile
+using Random
 
 
 struct PIDNode{T}
@@ -108,9 +109,11 @@ function compute_density!(pt::PIDTree{T}, X::AbstractArray{T, 2}, indeces) where
 end
 
 
-function fit!(pf::PIDForest{T}, X::AbstractArray{T, 2}; n_trees::Int=50, max_samples=100, max_depth=10,
+function fit!(pf::PIDForest{T}, X::AbstractArray{T, 2}; init_seed=nothing, n_trees::Int=50, max_samples=100, max_depth=10,
 												max_buckets=3, epsilon=0.1, threshold=0.0) where {T}
 	D, N = size(X)
+	(init_seed != nothing) ? Random.seed!(init_seed) : nothing
+	
 	idx_density = sample(1:N, min(max_depth * 200, N); replace=false) # these samples are used for density computation
 	
 	trees = map(1:n_trees) do i
@@ -127,6 +130,8 @@ function fit!(pf::PIDForest{T}, X::AbstractArray{T, 2}; n_trees::Int=50, max_sam
 
 		compute_density!(pt, X, idx_density)
 	end
+
+	(init_seed != nothing) ? Random.seed!() : nothing
 
 	pf.trees = trees
 	pf
