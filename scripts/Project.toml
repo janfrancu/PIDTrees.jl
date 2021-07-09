@@ -1,0 +1,16 @@
+name = "PIDForestScripts"
+uuid = "adff6388-c6dd-4f2d-b892-624548a9d499"
+authors = ["Jan Francu <jan.francu@gmail.com>"]
+version = "0.1.0"
+
+[deps]
+BenchmarkTools = "6e4b80f9-dd63-53aa-95a3-0cdb28fa8baf"
+Cairo = "159f3aea-2a34-519c-b102-8c37f9878175"
+EvalMetrics = "251d5f9e-10c1-4699-ba24-e0ad168fa3e4"
+GraphPlot = "a2cc645c-3eea-5389-862e-a155d0052231"
+LightGraphs = "093fc24a-ae57-5d10-9952-331d41423f4d"
+MAT = "23992714-dd62-5051-b70f-ba57cb901cac"
+PIDTrees = "103afb6e-e08b-4079-94ab-5f81baa4944a"
+Revise = "295af30f-e4ad-537b-8983-00126c2a3abe"
+StatsBase = "2913bbd2-ae8a-5f71-8c99-4fb6c76f3a91"
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
