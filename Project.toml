@@ -1,0 +1,10 @@
+name = "PIDTrees"
+uuid = "103afb6e-e08b-4079-94ab-5f81baa4944a"
+authors = ["Jan Francu <jan.francu@gmail.com>"]
+version = "0.1.0"
+
+[deps]
+StatsBase = "2913bbd2-ae8a-5f71-8c99-4fb6c76f3a91"
+
+[compat]
+julia = "1.5.1"
