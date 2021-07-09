@@ -44,4 +44,4 @@ df = reduce(vcat, results)
 metrics = [:auc, :fit_t, :eval_t]
 df_agg = combine(groupby(df, :dataset), metrics .=> mean .=> metrics, metrics .=> std)
 df_agg[:, 2:end] .= round.(df_agg[:, 2:end], digits=3)
-df_agg
+@info df_agg

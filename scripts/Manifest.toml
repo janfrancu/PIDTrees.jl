@@ -425,10 +425,10 @@ uuid = "2f80f16e-611a-54ab-bc61-aa92de5b98fc"
 version = "8.42.0+4"
 
 [[PIDTrees]]
-deps = ["StatsBase"]
+deps = ["Random", "StatsBase"]
 path = ".."
 uuid = "103afb6e-e08b-4079-94ab-5f81baa4944a"
-version = "0.1.0"
+version = "0.1.1"
 
 [[Pango_jll]]
 deps = ["Artifacts", "Cairo_jll", "Fontconfig_jll", "FreeType2_jll", "FriBidi_jll", "Glib_jll", "HarfBuzz_jll", "JLLWrappers", "Libdl", "Pkg"]

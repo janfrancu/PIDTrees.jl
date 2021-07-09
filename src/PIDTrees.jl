@@ -5,7 +5,7 @@ include("tree.jl")
 include("histogram.jl")
 
 
-export HyperCube, PIDForest
+export PIDForest
 
 
 end # module
