@@ -115,7 +115,7 @@ function fit!(pf::PIDForest{T}, X::AbstractArray{T, 2}; n_trees::Int=50, max_sam
 	
 	trees = map(1:n_trees) do i
 		idx_train = sample(1:N, min(max_samples, N); replace=false) # these samples are used for training individual trees
-		h = HyperCube(X[:, idx_train])
+		h = HyperCube(X)
 		pt = PIDTree{T}()
 		head = reserve_children!(pt::PIDTree, 1)[1] # extends the array by one for the root node
 		pt = grow!(pt, X, idx_train, h, 0, head,
