@@ -133,41 +133,33 @@ function fit!(pf::PIDForest{T}, X::AbstractArray{T, 2}; n_trees::Int=50, max_sam
 end
 
 
-### finds which indeces correspond to each bucket
+# finds which indeces correspond to each bucket
 function split!(split_indices, pt::PIDTree, node_idx::Int, X, indeces)
 	node = pt.nodes[node_idx]
 	# unless in leaf node continue split or 
 	if length(node.children) > 0
 		for c in node.children
 			cnode = pt.nodes[c]
-			# the child node can be a leaf
-			if cnode.feature == -1
-				split_indices[indeces] .= c
-			else
-				new_indeces = restrict_indices(X, indeces, cnode.hc, cnode.feature)
-				# if the current node is the last to have these indices in it
-				# mark that they have ended here
-				if length(new_indeces) == 0
-					split_indices[indeces] .= node_idx
-				else
-					split!(split_indices, pt, c, X, new_indeces)
-				end
+			new_indeces = restrict_indices(X, indeces, cnode.hc, node.feature)
+			if length(new_indeces) > 0
+				split!(split_indices, pt, c, X, new_indeces)
 			end
 		end
 	else
-		@info("This should not print")
 		split_indices[indeces] .= node_idx
 	end
 end
 
 function predict(pt::PIDTree, X)
-	### split indeces should be a list of pointers to pt.nodes/pt.densities arrays
-	### indicating where each sample has ended its path through the tree
+	# split indeces should be a list of pointers to pt.nodes/pt.densities arrays
+	# indicating where each sample has ended in its path through the tree
+	# it may happen that some samples do not belong to any leaf -> 0.0
 	num_samples = size(X, 2)
 	split_indices = zeros(Int, num_samples)
 	split!(split_indices, pt, 1, X, collect(1:num_samples))
-	@assert all(split_indices .> 0) ### only if we can find the samples in our tree
-	pt.densities[split_indices]
+	map(split_indices) do si
+		(si > 0) ? pt.densities[si] : zero(eltype(pt.densities))
+	end
 end
 
 function predict(pf::PIDForest, X; pct=75)
